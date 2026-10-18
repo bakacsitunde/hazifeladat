@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Összefoglaló: Methods és Forms</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; padding: 20px; max-width: 950px; margin: 0 auto; color: #333; background-color: #f9f9f9; }
+        h1, h2, h3 { color: #42b883; }
+        h1 { border-bottom: 2px solid #35495e; padding-bottom: 10px; }
+        .section { background: white; padding: 20px; margin-bottom: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        code { background: #f1f1f1; padding: 2px 6px; border-radius: 4px; font-family: Consolas, monospace; }
+        pre { background: #2d3748; color: #f7fafc; padding: 15px; border-radius: 6px; overflow-x: auto; font-family: Consolas, monospace; white-space: pre-wrap; margin-bottom: 20px; }
+        ul { padding-left: 20px; }
+        .highlight { font-weight: bold; color: #35495e; }
+        
+    
+        .live-demo { background: #edf2f7; border-left: 5px solid #42b883; padding: 20px; border-radius: 4px; margin-top: 15px; }
+        .live-demo h4 { margin-top: 0; color: #2d3748; border-bottom: 1px solid #cbd5e0; padding-bottom: 5px; }
+        
+    
+        .demo-btn { background-color: #42b883; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        .demo-btn:hover { background-color: #35495e; }
+        .demo-input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-right: 10px; width: 200px; }
+        .demo-list { margin-top: 10px; padding-left: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>Vue.js Elméleti Összefoglaló & Interaktív Demo</h1>
+    
+
+    <!-- METHODS -->
+    <div class="section">
+        <h2>1. Vue Methods (Metódusok)</h2>
+        <p>A Vue példányon vagy komponensen belüli <code>methods</code> opció olyan függvények tárolására szolgál, amelyeket a felhasználói felületről, leggyakrabban eseménykezelőkön (<code>v-on</code> vagy <code>@</code>) keresztül hívhatunk meg.</p>
+        
+        <h3>Működés leírása és kulcsfontosságú szabályok:</h3>
+        <ul>
+            <li><span class="highlight">Eseménykezelés:</span> A metódusok kiválóan alkalmasak összetettebb logikák lefutására, amikor a felhasználó kattint, gépel, vagy egyéb interakcióba lép az oldallal.</li>
+            <li><span class="highlight">A 'this' kulcsszó:</span> Ha egy metóduson belülről el szeretnénk érni a <code>data</code> fázisban deklarált reaktív változókat, kötelező a <code>this.</code> előtagot használni (pl. <code>this.szamlalo</code>).</li>
+        </ul>
+
+        <h3>Mintakód (Egyszerű számláló metódussal):</h3>
+        <pre id="code-methods"></pre>
+
+        <div class="live-demo" id="app-methods">
+            <h4>Élő Demonstráció / Próbáld ki!</h4>
+            <p>Kattintások száma: <strong style="font-size: 18px; color: #35495e;">{{ count }}</strong></p>
+            <button @click="increment(1)" class="demo-btn">+1 hozzáadása</button>
+        </div>
+    </div>
+
+    <!-- FORMS -->
+    <div class="section">
+        <h2>2. Vue Forms (Űrlapok kezelése)</h2>
+        <p>A Vue rendkívül egyszerűvé teszi az űrlapok kezelését és a beviteli mezők adatainak validálását a kétirányú adatköttetés segítségével.</p>
+        
+        <h3>Működés leírása és kulcsfontosságú szabályok:</h3>
+        <ul>
+            <li><span class="highlight">Kétirányú adatköttetés (v-model):</span> A <code>v-model</code> direktíva összeköti a HTML input elemet a Vue adatmodelljével. Ha a felhasználó beír valamit a mezőbe, a háttérben lévő változó azonnal frissül.</li>
+            <li><span class="highlight">Esemény módosítók (.prevent):</span> Az űrlapok elküldésekor alapértelmezett oldal-újratöltést az <code>@submit.prevent</code> módosítóval tudjuk letiltani, így az adatokat aszinkron módon dolgozhatjuk fel.</li>
+        </ul>
+
+        <h3>Mintakód (Elem hozzáadása egy listához):</h3>
+        <pre id="code-forms"></pre>
+
+        <!-- INTERAKTÍV DEMO 2 -->
+        <div class="live-demo" id="app-forms">
+            <h4>Élő Demonstráció / Próbáld ki!</h4>
+            <form @submit.prevent="addItem">
+                <input type="text" v-model="newItemName" class="demo-input" placeholder="Írj be egy új elemet..." required>
+                <button type="submit" class="demo-btn">Hozzáadás a listához</button>
+            </form>
+            
+            <p style="margin-bottom: 5px; font-weight: bold;">Elemeim listája:</p>
+            <p v-if="itemsList.length === 0" style="color: #718096; font-style: italic;">A lista még üres.</p>
+            <ul class="demo-list">
+                <li v-for="(item, index) in itemsList" :key="index">{{ item }}</li>
+            </ul>
+        </div>
+    </div>
+
+  
+    <script>
+        document.getElementById('code-methods').textContent = 
+`<div id="app">
+  <p>Kattintások száma: {{ count }}</p>
+  <button @click="increment(1)">+1 hozzáadása</button>
+</div>
+
+<script>
+  const app = Vue.createApp({
+    data() {
+      return { count: 0 }
+    },
+    methods: {
+      increment(amount) {
+        this.count += amount;
+      }
+    }
+  }).mount('#app');
+<\/script>`;
+
+        document.getElementById('code-forms').textContent = 
+`<div id="app">
+  <form @submit.prevent="addItem">
+    <input type="text" v-model="newItemName" placeholder="Új elem" required>
+    <button type="submit">Hozzáadás</button>
+  </form>
+</div>
+
+<script>
+  const app = Vue.createApp({
+    data() {
+      return {
+        newItemName: '',
+        itemsList: []
+      }
+    },
+    methods: {
+      addItem() {
+        if(this.newItemName.trim() !== '') {
+          this.itemsList.push(this.newItemName);
+          this.newItemName = '';
+        }
+      }
+    }
+  }).mount('#app');
+<\/script>`;
+
+        // 2. Az 1. élő példa (Methods) elindítása
+        Vue.createApp({
+            data() {
+                return { count: 0 }
+            },
+            methods: {
+                increment(amount) {
+                    this.count += amount;
+                }
+            }
+        }).mount('#app-methods');
+
+        // 3. A 2. élő példa (Forms) elindítása
+        Vue.createApp({
+            data() {
+                return {
+                    newItemName: '',
+                    itemsList: ['Első minta elem', 'Második minta elem']
+                }
+            },
+            methods: {
+                addItem() {
+                    if(this.newItemName.trim() !== '') {
+                        this.itemsList.push(this.newItemName);
+                        this.newItemName = '';
+                    }
+                }
+            }
+        }).mount('#app-forms');
+    </script>
+</body>
+</html>
