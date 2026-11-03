@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Elmélet: Vue Forms</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; background-color: #f4f7f6; color: #2c3e50; }
+        h1, h2 { color: #35495e; border-bottom: 2px solid #ddd; padding-bottom: 8px; }
+        .content-box { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        code { background-color: #eef2f7; color: #2980b9; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.95em; }
+        pre { background-color: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 0.9em; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+    <h1>Vue.js Elméleti Témakör: Vue Forms (Űrlapkezelés)</h1>
+    
+    <div class="content-box">
+        <h2>A működés leírása</h2>
+        <p>A Vue.js rendkívül leegyszerűsíti a felhasználói adatbevitelt az űrlapokon (input mezők, textareák, checkboxok, legördülő menük). Az űrlapkezelés magja a dinamikus adatkapcsolat létrehozása.</p>
+        
+        <ul>
+            <li><strong>Kétirányú adatköttetés (Two-Way Data Binding):</strong> A <code>v-model</code> direktíva segítségével az input mező aktuális értéke és a Vue állapotában (data) lévő változó szorosan össze van láncolva. Ha a felhasználó gépel, a változó azonnal frissül; ha a változót kódból írjuk felül, a beviteli mező azonnal felveszi az új értéket.</li>
+            <li><strong>Eseménymódosítók (Event Modifiers):</strong> Az űrlapok elküldésekor a böngészők alapértelmezetten újratöltik az oldalt. A Vue-ban a <code>@submit.prevent</code> módosító használatával ez a működés letiltható, így az adatok feldolgozását vagy API-nak való továbbítását teljesen a háttérben végezhetjük el.</li>
+            <li><strong>Sokoldalúság:</strong> A <code>v-model</code> intelligensen alkalmazkodik az elem típusához. Megfelelően kezeli a logikai értékeket a jelölőnégyzeteknél (true/false), a string tömböket a többszörös kijelöléseknél, valamint a szöveges beviteleket is.</li>
+        </ul>
+    </div>
+
+    <div class="content-box">
+        <h2>Minta kód és szintaxis (Options API)</h2>
+        <p>Az alábbi példa bemutatja a kétirányú adatköttetés megvalósítását és a hagyományos űrlap-elküldés letiltását:</p>
+        
+        <pre><code>&lt;!-- HTML / Sablon rész --&gt;
+&lt;div id="app"&gt;
+    &lt;!-- Megakadályozzuk az oldal újratöltését a .prevent segítségével --&gt;
+    &lt;form @submit.prevent="kuldesKezeles"&gt;
+        &lt;label&gt;Felhasználónév:&lt;/label>
+        &lt;!-- Kétirányú kötés a v-model direktívával --&gt;
+        &lt;input type="text" v-model="felhasznaloNev" placeholder="Írd be a neved..."&gt;
+        
+        &lt;button type="submit"&gt;Regisztráció&lt;/button&gt;
+    &lt;/form&gt;
+    
+    &lt;p&gt;Gépelés közbeni élő előnézet: {{ felhasznaloNev }}&lt;/p>
+&lt;/div>
+
+&lt;script&gt;
+// JavaScript / Vue logika
+const app = Vue.createApp({
+    data() {
+        return {
+            felhasznaloNev: '' // Ide kötődik be az input értéke
+        }
+    },
+    methods: {
+        kuldesKezeles() {
+            alert('Sikeres űrlap feldolgozás! Név: ' + this.felhasznaloNev);
+        }
+    }
+}).mount('#app');
+&lt;/script&gt;</code></pre>
+    </div>
+
+</body>
+</html>

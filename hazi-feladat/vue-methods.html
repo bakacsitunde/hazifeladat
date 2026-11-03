@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Elmélet: Vue Methods</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; background-color: #f4f7f6; color: #2c3e50; }
+        h1, h2 { color: #42b983; border-bottom: 2px solid #ddd; padding-bottom: 8px; }
+        .content-box { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        code { background-color: #fee; color: #c0392b; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.95em; }
+        pre { background-color: #2c3e50; color: #ecf0f1; padding: 15px; border-radius: 6px; overflow-x: auto; font-size: 0.9em; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+    <h1>Vue.js Elméleti Témakör: Vue Methods (Metódusok)</h1>
+    
+    <div class="content-box">
+        <h2>A működés leírása</h2>
+        <p>A Vue.js keretrendszerben a <strong>metódusok (methods)</strong> olyan függvények, amelyek a komponens belső logikáját, üzleti folyamatait és az események lekezelését végzik. Segítségükkel reagálhatunk a felhasználói interakciókra, vagy strukturálhatjuk az ismétlődő kódrészleteket.</p>
+        
+        <ul>
+            <li><strong>Eseményvezérlés (Event Handling):</strong> A metódusokat leggyakrabban a HTML sablonból hívjuk meg a <code>v-on</code> direktíva vagy annak rövidített változata, a <code>@</code> szimbólum segítségével (például: <code>@click="szamol"</code>).</li>
+            <li><strong>Állapotmódosítás és Reaktivitás:</strong> A metódusok közvetlen hozzáféréssel rendelkeznek a komponens reaktív adataihoz. Amikor a függvény módosítja a tárolt változók értékét, a Vue automatikusan frissíti a böngészőben megjelenő HTML felületet.</li>
+            <li><strong>Argumentumok átadása:</strong> A sablonból történő meghívás során egyedi paramétereket, vagy akár a natív böngészős esemény objektumot (<code>$event</code>) is átadhatjuk a metódusnak feldolgozásra.</li>
+        </ul>
+    </div>
+
+    <div class="content-box">
+        <h2>Minta kód és szintaxis (Options API)</h2>
+        <p>Az alábbi példa bemutatja, hogyan deklarálunk egy metódust, amely gombnyomásra növeli a számláló értékét:</p>
+        
+        <pre><code>&lt;!-- HTML / Sablon rész --&gt;
+&lt;div id="app"&gt;
+    &lt;p&gt;A kattintások száma: {{ szamlalo }}&lt;/p&gt;
+    &lt;!-- Eseménykezelő összekötése a metódussal --&gt;
+    &lt;button @click="novelSzamlalo"&gt;Növelés&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// JavaScript / Vue logika
+const app = Vue.createApp({
+    data() {
+        return {
+            szamlalo: 0 // Reaktív állapot
+        }
+    },
+    methods: {
+        novelSzamlalo() {
+            // A 'this' kulcsszó segítségével módosítjuk a data tartalmát
+            this.szamlalo++;
+        }
+    }
+}).mount('#app');
+&lt;/script&gt;</code></pre>
+    </div>
+
+</body>
+</html>
