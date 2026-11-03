@@ -47,7 +47,7 @@ const novelSzamlalo = () => &#123;
       </div>
 
       <div class="practice-card">
-        <h3>Gyakorlati Működés (Demo):</h3>
+        <h3>Gyakorlati Működés:</h3>
         <p>Kattints a gombra a fenti metódus futtatásához!</p>
         <div class="demo-box">
           <p class="counter-text">Kattintások száma: <strong>{{ szamlalo }}</strong></p>
